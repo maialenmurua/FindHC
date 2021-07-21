@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
 import sys
-import shlex
-
+import time 
 
 #################################################
 #################################################
@@ -49,11 +48,17 @@ def ReadPerm(name):
              raw.append(line.split())
     array=np.array(pd.DataFrame(raw).values,dtype=int)
     return list(np.concatenate(array)) 
-    
+
+def Partial_Solution(file_name,hg,time):
+    with open('solution_{0}.txt'.format(file_name), 'w') as f:
+        print('HC:',hg,file=f)
+        print('Time:',time,file=f) 
+
     
 # Calls to the BF
 
 def Call_BF(file_name,perm,branching_method,ind_degree2,solver,collapsing):
+    init=time.time()
     adj_mat=ReadFiles(file_name)
     if perm=='No':
         matrix=ConvertMatrix(adj_mat)
@@ -68,8 +73,9 @@ def Call_BF(file_name,perm,branching_method,ind_degree2,solver,collapsing):
     elif collapsing=='Yes':
         from BF_classes_collapse import BF_Algorithms
         algorithms=BF_Algorithms(matrix,0.99,0,branching_method,ind_degree2,solver)
-    print(algorithms.Branch_and_Fix())
-    
+    code,hg,levels,calls=algorithms.Branch_and_Fix()
+    fin=time.time()
+    Partial_Solution(file_name,hg,fin-init)
 if __name__ == '__main__':
     
     graph = sys.argv[1]
