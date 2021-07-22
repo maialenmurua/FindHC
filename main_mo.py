@@ -1,11 +1,13 @@
 import numpy as np
 import pandas as pd
-import sys
-import time 
+import sys 
+from BF_multi_objective_HCP import BF_Algorithms
+
 
 #################################################
 #################################################
-######### MAIN FUNCTION TO EXECUTE ##############
+########### MAIN FUNCTION TO EXECUTE ############
+######### MULTI-OBJETIVE BRANCH-AND-FIX##########
 #################################################
 #################################################
 
@@ -49,23 +51,11 @@ def ReadPerm(name):
     array=np.array(pd.DataFrame(raw).values,dtype=int)
     return list(np.concatenate(array)) 
 
-# Creates a file with the solution
-def Partial_Solution(file_name,hg,time,perm):
-    if perm=='No':
-        with open('solution_{0}.txt'.format(file_name), 'w') as f:
-            print('HC:',hg,file=f)
-            print('Time:',time,file=f) 
-    else:
-         with open('solution_{0}_{1}.txt'.format(file_name,perm), 'w') as f:
-           print('HC:',hg,file=f)
-           print('Time:',time,file=f) 
-       
 
     
 # Calls to the BF
 
-def Call_BF(file_name,perm,branching_method,ind_degree2,solver,collapsing):
-    init=time.time()
+def Call_BF(file_name,perm,branching_method,c1,c2,ind_degree2,solver):
     adj_mat=ReadFiles(file_name)
     if perm=='No':
         matrix=ConvertMatrix(adj_mat)
@@ -74,23 +64,20 @@ def Call_BF(file_name,perm,branching_method,ind_degree2,solver,collapsing):
         aux=adj_mat[:,permutation]
         aux_matrix=aux[permutation,:]
         matrix=ConvertMatrix(aux_matrix)
-    if collapsing=='No':
-        from BF_classes_branching import BF_Algorithms
-        algorithms=BF_Algorithms(matrix,0.99,0,branching_method,ind_degree2,solver)
-    elif collapsing=='Yes':
-        from BF_classes_collapse import BF_Algorithms
-        algorithms=BF_Algorithms(matrix,0.99,0,branching_method,ind_degree2,solver)
-    code,hg,levels,calls=algorithms.Branch_and_Fix()
-    fin=time.time()
-    Partial_Solution(file_name,hg,fin-init,perm)
+    algorithms=BF_Algorithms(matrix,0.99,0,int(branching_method),c1,c2,ind_degree2
+                             ,solver,file_name,perm)
+    code,hg=algorithms.Branch_and_Fix()
+
+
 if __name__ == '__main__':
     
     graph = sys.argv[1]
     perm = sys.argv[2]
     branching= sys.argv[3]
-    simp = sys.argv[4]
-    solver = sys.argv[5]
-    collapse = sys.argv[6]
-    Call_BF(graph,perm,branching,simp,solver,collapse)
+    c1=sys.argv[4]
+    c2=sys.argv[5]
+    simp = sys.argv[6]
+    solver = sys.argv[7]
+    Call_BF(graph,perm,branching,c1,c2,simp,solver)
 
 

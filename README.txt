@@ -20,6 +20,7 @@ It also allows GUROBI solver: https://www.gurobi.com/downloads/gurobi-optimizer-
 
 # Usage
 
+# Branch-and-Fix
 python3 main.py file_name perm branching simplification solver collapse
 
 file_name: the name of .txt file with the adjacency matrix
@@ -28,6 +29,19 @@ branching={1,2,3,4,5,6}
 simplification={'No','Yes'}
 solver={'cplex','gurobi'}
 collapse={'No','Yes'}
+
+# Multi-objective Branch-and-Fix
+
+python3 main_mo.py file_name perm branching c1 c2 simplification solver
+
+file_name: the name of .txt file with the adjacency matrix
+perm={'No','perm_file_name'}, perm_file_name: the name of .txt file with the permutation
+branching={1,2,3,4,5,6}
+c1: the name of .txt file with the weight matrix for objective 1
+c2: the name of .txt file with the weight matrix for objective 2
+simplification={'No','Yes'}
+solver={'cplex','gurobi'}
+
 
 # Authors
 
