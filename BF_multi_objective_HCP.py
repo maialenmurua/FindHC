@@ -20,7 +20,7 @@ import branching_methods as branching_methods
 ###############################################
 
 start = time.time()
-PERIOD_OF_TIME = 100
+PERIOD_OF_TIME = 1
 time_counter=0        
 
 list_hg=[]
@@ -126,6 +126,7 @@ class BF_Algorithms:
             
     def Branch_and_Fix(self):
         global time_counter  
+        global PERIOD_OF_TIME
         while True:
             fixed_arcs=self.fixed_arcs # save the actual graph's fixed arcs
             if self.ind_degree2=='Yes':

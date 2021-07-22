@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import sys 
-from BF_multi_objective_HCP import BF_Algorithms
+
 
 
 #################################################
@@ -55,7 +55,7 @@ def ReadPerm(name):
     
 # Calls to the BF
 
-def Call_BF(file_name,perm,branching_method,c1,c2,ind_degree2,solver):
+def Call_BF(file_name,perm,branching_method,c1,c2,ind_degree2,solver,max_time):
     adj_mat=ReadFiles(file_name)
     if perm=='No':
         matrix=ConvertMatrix(adj_mat)
@@ -63,8 +63,10 @@ def Call_BF(file_name,perm,branching_method,c1,c2,ind_degree2,solver):
         permutation=ReadPerm(perm)
         aux=adj_mat[:,permutation]
         aux_matrix=aux[permutation,:]
-        matrix=ConvertMatrix(aux_matrix)
-    algorithms=BF_Algorithms(matrix,0.99,0,int(branching_method),c1,c2,ind_degree2
+        matrix=ConvertMatrix(aux_matrix)  
+    import BF_multi_objective_HCP      
+    BF_multi_objective_HCP.PERIOD_OF_TIME=max_time   
+    algorithms= BF_multi_objective_HCP.BF_Algorithms(matrix,0.99,0,int(branching_method),c1,c2,ind_degree2
                              ,solver,file_name,perm)
     code,hg=algorithms.Branch_and_Fix()
 
@@ -78,6 +80,7 @@ if __name__ == '__main__':
     c2=sys.argv[5]
     simp = sys.argv[6]
     solver = sys.argv[7]
-    Call_BF(graph,perm,branching,c1,c2,simp,solver)
+    max_time=sys.argv[8]
+    Call_BF(graph,perm,branching,c1,c2,simp,solver,max_time)
 
 

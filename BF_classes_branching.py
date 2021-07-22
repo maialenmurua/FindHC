@@ -23,7 +23,7 @@ calls=1
 
 
 
-# The BF_Algorithms class will implement the Branch and Fix algorithm and
+# The BF_Algorithms class will implement the Branch-and-Fix algorithm and
 # all the auxiliary algorithms required
 # It needs one object of type BF_Constraints and one object of type BF_HPGraph
 
