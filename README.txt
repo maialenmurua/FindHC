@@ -32,7 +32,7 @@ collapse={'No','Yes'}
 
 # Multi-objective Branch-and-Fix
 
-python3 main_mo.py file_name perm branching c1 c2 simplification solver
+python3 main_mo.py file_name perm branching c1 c2 simplification solver max_time
 
 file_name: the name of .txt file with the adjacency matrix
 perm={'No','perm_file_name'}, perm_file_name: the name of .txt file with the permutation
@@ -41,6 +41,7 @@ c1: the name of .txt file with the weight matrix for objective 1
 c2: the name of .txt file with the weight matrix for objective 2
 simplification={'No','Yes'}
 solver={'cplex','gurobi'}
+max_time= maximum time to execute the code in seconds
 
 
 # Authors
