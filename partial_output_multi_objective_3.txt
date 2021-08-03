@@ -1,7 +1,0 @@
-Number of HCs: 11
-Pareto Set: [5962 5110]
-Pareto Set: [6001 5094]
-Pareto Set: [6038 4815]
-Pareto Set: [6110 4687]
-Pareto Set: [6061 4814]
-Pareto Set: [6011 4993]
