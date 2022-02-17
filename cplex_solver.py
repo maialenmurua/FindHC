@@ -35,8 +35,6 @@ def CPLEXPY(f,zero_row,Aeq,beq):
                                rhs = rhs)
     problem.parameters.lpmethod.set(problem.parameters.lpmethod.values.primal) # we are solving the primal
     problem.parameters.simplex.tolerances.feasibility.set(1e-9) # the permitted minimum tolerance
-    problem.parameters.preprocessing.aggregator.set(0)
-    problem.parameters.preprocessing.reduce.set(0)
     problem.solve() # Solve the problem
     status = problem.solution.get_status() # get the status
     if status!=1: 

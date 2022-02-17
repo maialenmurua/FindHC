@@ -108,7 +108,9 @@ class BF_Algorithms:
     def Update_constraints(self):
        self.A=self.graph.A
        self.graph.RowSums()
-       self.row_sums=self.graph.row_sums         
+       self.row_sums=self.graph.row_sums  
+       self.graph.StartNodes()
+       self.start_nodes=self.graph.start_nodes               
               
     # Get partial solutions        
     def Partial_Solutions(self,time_counter):
@@ -136,11 +138,12 @@ class BF_Algorithms:
                     return -1,[]
          
                 else:
-                    self.__init__(adj_mat,self.beta,self.level,self.branching_method,self.c1_file,self.c2_file,                                 self.ind_degree2,self.solver,self.file_name,self.perm) 
+                    self.__init__(adj_mat,self.beta,self.level,self.branching_method,self.c1_file,self.c2_file,self.ind_degree2,self.solver,self.file_name,self.perm) 
                 # Redefined the graph with the new matrix
                 self.fixed_arcs=fixed_arcs  #
             elif self.ind_degree2=='No':
-                self.__init__(self.A,self.beta,self.level,self.branching_method,self.c1_file,self.c2_file,                               self.ind_degree2,self.solver,self.file_name,self.perm)
+                self.__init__(self.A,self.beta,self.level,self.branching_method,self.c1_file,self.c2_file, self.ind_degree2,self.solver,self.file_name,self.perm)
+                self.fixed_arcs=fixed_arcs  
 
             status, second_x, function_value =  linear_programs.Second_LP_Algorithm(self.graph,self.beta,self.fixed_arcs,self.solver)
 

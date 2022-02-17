@@ -106,6 +106,8 @@ class BF_Algorithms:
        self.A=self.graph.A
        self.graph.RowSums()
        self.row_sums=self.graph.row_sums
+       self.graph.StartNodes()
+       self.start_nodes=self.graph.start_nodes       
        
                               
     def Branch_and_Fix(self):
@@ -127,6 +129,7 @@ class BF_Algorithms:
         
         elif self.ind_degree2=='No':
             self.__init__(self.A,self.beta,self.level,self.branching_method,self.ind_degree2,self.solver)
+            self.fixed_arcs=fixed_arcs  
         
         status, second_x, function_value =  linear_programs.Second_LP_Algorithm(self.graph,self.beta,self.fixed_arcs,self.solver) # Check feasibility with Second LP
    
